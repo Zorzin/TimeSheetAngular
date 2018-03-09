@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { CalendarEvent } from 'angular-calendar';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  @Input() locale: string = 'en';
+
+  @Output() viewChange: EventEmitter<string> = new EventEmitter();
+
+  @Output() viewDateChange: EventEmitter<Date> = new EventEmitter();
+
+  view: string = 'month';
+
+  viewDate: Date = new Date();
+
+  events: CalendarEvent[] = [];
+
+  clickedDate: Date;
 }
