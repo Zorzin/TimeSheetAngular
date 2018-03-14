@@ -1,0 +1,24 @@
+<form [formGroup]="entryForm" id="dialog">
+  <div formGroupName="date">
+    <mat-form-field>
+      <input matInput formControlName="dateValue" [matDatepicker]="datePicker" placeholder="Select date">
+      <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+      <mat-datepicker #datePicker ></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div formGroupName="type">
+    <mat-form-field>
+      <mat-select formControlName="workTypeValue">
+        <mat-option *ngFor="let type of workTypes" [value]="type.value">
+          {{ type.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</form>
+<div>
+  <ngb-timepicker [(ngModel)]="startValue"></ngb-timepicker>
+</div>
+<div>
+  <ngb-timepicker [(ngModel)]="endValue"></ngb-timepicker>
+</div>
