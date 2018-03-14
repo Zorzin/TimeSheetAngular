@@ -31,8 +31,7 @@ export class AppComponent implements OnInit  {
   OnDayClicked(date :Date) {
       this.clickedDate = date;
     let dialogRef = this.dialog.open(EntryDialogComponent,{
-      height: this.height.toString(),
-      width: this.width.toString(),
+      data: {dateValue:this.clickedDate}
     });
 
   }

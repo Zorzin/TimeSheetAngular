@@ -13,6 +13,8 @@ export class EntryDialogComponent implements OnInit {
   public date:FormControl;
   public type:FormControl;
 
+  allDaySwitch : boolean = false;
+  dateValue : Date;
   workTypes = [
     {value: 'office', viewValue: 'Office'},
     {value: 'delegation', viewValue: 'Delegation'},
@@ -35,7 +37,7 @@ export class EntryDialogComponent implements OnInit {
 
 
   createFormControls() {
-    this.date = new FormControl('', [
+    this.date = new FormControl(this.data.dateValue, [
       Validators.required
     ]);
 
@@ -53,5 +55,13 @@ export class EntryDialogComponent implements OnInit {
         workTypeValue: this.type
       })
     });
+  }
+
+  closeDialog() {
+
+  }
+
+  save() {
+
   }
 }

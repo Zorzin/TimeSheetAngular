@@ -16,9 +16,19 @@
     </mat-form-field>
   </div>
 </form>
-<div>
-  <ngb-timepicker [(ngModel)]="startValue"></ngb-timepicker>
+<div class="checkbox">
+  <label><input type="checkbox" (change)="allDaySwitch = !allDaySwitch"/>All day</label>
 </div>
-<div>
-  <ngb-timepicker [(ngModel)]="endValue"></ngb-timepicker>
+<div *ngIf="!allDaySwitch">
+  <div>
+    <ngb-timepicker [(ngModel)]="startValue"></ngb-timepicker>
+  </div>
+  <div>
+    <ngb-timepicker [(ngModel)]="endValue"></ngb-timepicker>
+  </div>
 </div>
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close >Cancel</button>
+  <button mat-button mat-dialog-close (click)="save()" >asd</button>
+</mat-dialog-actions>
