@@ -11,6 +11,10 @@ import { MatCheckboxModule, MatButtonModule, MatNativeDateModule, MatInputModule
 import { EntryDialogComponent } from './Dialogs/entry-dialog/entry-dialog.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ApiService} from './Services/api.service';
+import {EntryService} from './Services/entry.service';
+import {UserService} from './Services/user.service';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   entryComponents:[
@@ -21,6 +25,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     EntryDialogComponent
   ],
   imports: [
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
@@ -36,7 +41,11 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     MatNativeDateModule,
     NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    ApiService,
+    EntryService,
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

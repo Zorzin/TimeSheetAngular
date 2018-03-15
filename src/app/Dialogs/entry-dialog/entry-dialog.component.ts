@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {EntryService} from '../../Services/entry.service';
 
 @Component({
   selector: 'app-entry-dialog',
@@ -22,12 +23,14 @@ export class EntryDialogComponent implements OnInit {
     {value: 'paidleave', viewValue: 'Paid Leave'},
     {value: 'freeleave', viewValue: 'Free Leave'},
   ]
-  startValue = {hour: 8, minute: 0};
-  endValue = {hour: 16, minute: 0};
+  startValue = {hours: 8, minutes: 0};
+  endValue = {hours: 16, minutes: 0};
+  outsideValue = {hours: 0, minutes: 0};
 
 
   constructor(public dialogRef: MatDialogRef<EntryDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any)
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              private entryService: EntryService)
   {}
 
   ngOnInit() {
@@ -62,6 +65,6 @@ export class EntryDialogComponent implements OnInit {
   }
 
   save() {
-
+    this.entryService.SaveEntry(this.startValue,this.endValue,this.date.value,this.outsideValue,this.type.value,this.allDaySwitch);
   }
 }
