@@ -15,6 +15,10 @@ import {ApiService} from './Services/api.service';
 import {EntryService} from './Services/entry.service';
 import {UserService} from './Services/user.service';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { RegisterComponent } from './Components/register/register.component';
+import {LoginComponent} from './Components/login/login.component';
+import {AppRoutingModule} from './app-routing/app-routing.module';
+import { CalendarComponent } from './Components/calendar/calendar.component';
 
 @NgModule({
   entryComponents:[
@@ -22,9 +26,13 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
   ],
   declarations: [
     AppComponent,
-    EntryDialogComponent
+    EntryDialogComponent,
+    RegisterComponent,
+    LoginComponent,
+    CalendarComponent
   ],
   imports: [
+    AppRoutingModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

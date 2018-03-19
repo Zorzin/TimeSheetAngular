@@ -14,15 +14,16 @@ export class EntryService {
               private apiSerive: ApiService,
               private userService: UserService) { }
 
-  public SaveEntry(startTime: Time, endTime : Time, date:Date, outsiteTime:Time, type:string,allDay:boolean)
+  public SaveEntry(startTime, endTime, date:Date, outsiteTime, type:string,allDay:boolean)
   {
       let entry = new Entry();
       entry.AllDay = allDay;
-      entry.StartTime = startTime;
-      entry.EndTime = endTime;
+      entry.StartTime = this.GetTimeStringFromTime(startTime);
+      entry.EndTime = this.GetTimeStringFromTime(endTime);
       entry.Date = this.GetDateWithOffset(date);
-      entry.OutsideTime = outsiteTime;
+      entry.OutsideTime = this.GetTimeStringFromTime(outsiteTime);
       entry.Type = type;
+      entry.UserId = this.userService.getUserId();
 
       this.SendEntryToAPI(entry);
   }
@@ -31,8 +32,8 @@ export class EntryService {
   {
     let body = JSON.stringify(entry);
     console.log(body);
-    // this.http.post(this.apiSerive.GetEntryURL()+this.userService.getUserId(),body,{headers:this.headers,responseType: 'text' })
-    //   .subscribe();
+    this.http.post(this.apiSerive.GetEntryURL(),body,{headers:this.headers,responseType: 'text' })
+      .subscribe();
   }
 
   private GetDateWithOffset(date :Date)
@@ -43,4 +44,7 @@ export class EntryService {
     return newDate;
   }
 
+  private GetTimeStringFromTime(time) {
+    return time.hour + ":" + time.minute + ":0";
+  }
 }

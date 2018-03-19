@@ -23,9 +23,9 @@ export class EntryDialogComponent implements OnInit {
     {value: 'paidleave', viewValue: 'Paid Leave'},
     {value: 'freeleave', viewValue: 'Free Leave'},
   ]
-  startValue = {hours: 8, minutes: 0};
-  endValue = {hours: 16, minutes: 0};
-  outsideValue = {hours: 0, minutes: 0};
+  startValue = {hour: 8, minute: 0};
+  endValue = {hour: 16, minute: 0};
+  outsideValue = {hour: 0, minute: 0};
 
 
   constructor(public dialogRef: MatDialogRef<EntryDialogComponent>,
