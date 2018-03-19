@@ -58,6 +58,10 @@ export class UserService {
         return true;
       });
   }
+
+  isLoggedIn() {
+    return this.loggedIn;
+  }
 }
 
 interface LoginResponse {

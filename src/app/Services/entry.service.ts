@@ -30,6 +30,9 @@ export class EntryService {
 
   private SendEntryToAPI(entry:Entry)
   {
+    let authToken = localStorage.getItem('auth_token');
+    this.headers.append('Authorization', `Bearer ${authToken}`);
+
     let body = JSON.stringify(entry);
     console.log(body);
     this.http.post(this.apiSerive.GetEntryURL(),body,{headers:this.headers,responseType: 'text' })
