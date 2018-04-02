@@ -12,6 +12,12 @@ export class ApiService {
     return this.apiUrl + "entries";
   }
 
+
+  public GetEntryByDateURL()
+  {
+    return this.apiUrl + "entries/date";
+  }
+
   public GetAccountsURL()
   {
     return this.apiUrl + "accounts";

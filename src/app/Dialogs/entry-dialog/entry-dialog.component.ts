@@ -2,6 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EntryService} from '../../Services/entry.service';
+import {EntryDialogType} from '../../Helpers/entry-dialog-type.enum';
+import {Entry} from '../../Models/entry';
 
 @Component({
   selector: 'app-entry-dialog',
@@ -36,6 +38,7 @@ export class EntryDialogComponent implements OnInit {
   ngOnInit() {
     this.createFormControls();
     this.createForm();
+    this.GetEntryIfUpdate();
   }
 
 
@@ -66,5 +69,24 @@ export class EntryDialogComponent implements OnInit {
 
   save() {
     this.entryService.SaveEntry(this.startValue,this.endValue,this.date.value,this.outsideValue,this.type.value,this.allDaySwitch);
+  }
+
+  private GetEntryIfUpdate() {
+    console.log(this.data.dialogType);
+    if(this.data.dialogType == EntryDialogType.Update) {
+      let entry: Entry = this.data.entry;
+      console.log(entry);
+      this.startValue = this.GetTimeFromString(entry.startTime);
+      this.endValue = this.GetTimeFromString(entry.endTime);
+      this.outsideValue = this.GetTimeFromString(entry.outsideTime);
+      this.allDaySwitch = entry.allDay;
+      this.type.setValue(entry.type);
+    }
+  }
+
+  GetTimeFromString(time : string)
+  {
+    let splitted = time.split(":", 3);
+    return{hour: +splitted[0], minute: +splitted[1]};
   }
 }

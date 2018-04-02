@@ -18,7 +18,6 @@ export class EntryService {
   {
     let authToken = localStorage.getItem('auth_token');
     this.headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
-    console.log(this.headers);
   }
 
   public SaveEntry(startTime, endTime, date:Date, outsiteTime, type:string,allDay:boolean)
@@ -37,6 +36,12 @@ export class EntryService {
   {
     this.AddTokenToHeaders();
     return this.http.get(this.apiSerive.GetEntryURL() + "/" + id).toPromise();
+  }
+
+  public GetEntryForDate(date: Date)
+  {
+    this.AddTokenToHeaders();
+    return this.http.get(this.apiSerive.GetEntryByDateURL() + "/" + this.userService.getUserId() + "/" + date.toDateString(), {headers:this.headers}).toPromise();
   }
 
   public GetEntriesForDates(startDate: Date, endDate: Date)

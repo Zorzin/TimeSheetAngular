@@ -17,7 +17,7 @@
   </div>
 </form>
 <div class="checkbox">
-  <label><input type="checkbox" (change)="allDaySwitch = !allDaySwitch"/>All day</label>
+  <label><input type="checkbox" [checked]="allDaySwitch" (change)="allDaySwitch = !allDaySwitch"/>All day</label>
 </div>
 <div *ngIf="!allDaySwitch">
   <div>

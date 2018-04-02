@@ -13,13 +13,11 @@ import {
   endOfDay,
   format
 } from 'date-fns';
-import {map} from 'rxjs/operators';
-import {HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Entry} from '../../Models/entry';
 import {colors} from '../../Helpers/colors';
 import {EntryService} from '../../Services/entry.service';
-import {pipe} from 'rxjs/util/pipe';
+import {EntryDialogType} from '../../Helpers/entry-dialog-type.enum';
 
 @Component({
   selector: 'app-calendar',
@@ -51,10 +49,20 @@ export class CalendarComponent implements OnInit {
 
   OnDayClicked(date :Date) {
     this.clickedDate = date;
-    let dialogRef = this.dialog.open(EntryDialogComponent,{
-      data: {dateValue:this.clickedDate}
-    });
+    this.OpenDialog(this.clickedDate);
+  }
 
+  private OpenDialog(clickedDate: Date){
+    let entry;
+    this.entryService.GetEntryForDate(clickedDate).then((response : Entry) => {
+      console.log(response);
+      entry = response;
+    }).then(()=>{
+      console.log(entry);
+      this.dialog.open(EntryDialogComponent,{
+        data: {dateValue:this.clickedDate, dialogType:entry!=null?EntryDialogType.Update:EntryDialogType.New, entry: entry}
+      });
+    });
   }
 
 
@@ -81,7 +89,7 @@ export class CalendarComponent implements OnInit {
         this.events = this.GetEvents(results);
       });
 
-  }
+}
 
   private GetEvents(results) {
     return results.map((entry: Entry) => {

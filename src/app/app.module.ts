@@ -30,7 +30,7 @@ import {AuthGuard} from './auth.guard';
     EntryDialogComponent,
     RegisterComponent,
     LoginComponent,
-    CalendarComponent
+    CalendarComponent,
   ],
   imports: [
     AppRoutingModule,
