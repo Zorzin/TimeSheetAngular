@@ -19,6 +19,7 @@ import { RegisterComponent } from './Components/register/register.component';
 import {LoginComponent} from './Components/login/login.component';
 import {AppRoutingModule} from './app-routing/app-routing.module';
 import { CalendarComponent } from './Components/calendar/calendar.component';
+import {AuthGuard} from './auth.guard';
 
 @NgModule({
   entryComponents:[
@@ -52,7 +53,8 @@ import { CalendarComponent } from './Components/calendar/calendar.component';
   providers: [
     ApiService,
     EntryService,
-    UserService
+    UserService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

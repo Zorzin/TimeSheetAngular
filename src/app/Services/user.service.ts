@@ -30,12 +30,13 @@ export class UserService {
 
   public getUserId() :string
   {
-    try{
-      return localStorage.getItem('userId');
-    }
-    catch(Error) {
-      return "asd";
-    }
+    return "d5b7b2cb-8ce2-4c6f-b087-df8a7ba5c8c4";
+    // try{
+    //   return localStorage.getItem('userId');
+    // }
+    // catch(Error) {
+    //   return "asd";
+    // }
   }
 
   register(email: string, password: string, firstName: string, lastName: string,location: string)

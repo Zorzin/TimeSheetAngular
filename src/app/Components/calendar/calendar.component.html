@@ -6,6 +6,8 @@
         mwlCalendarPreviousView
         [view]="view"
         [(viewDate)]="viewDate"
+        (viewDateChange)="fetchEvents()"
+        (viewChange)="fetchEvents()"
         (viewDateChange)="viewDateChange.next(viewDate)">
         Previous
       </button>
@@ -13,6 +15,8 @@
         mat-button
         mwlCalendarToday
         [(viewDate)]="viewDate"
+        (viewDateChange)="fetchEvents()"
+        (viewChange)="fetchEvents()"
         (viewDateChange)="viewDateChange.next(viewDate)">
         Today
       </button>
@@ -21,6 +25,8 @@
         mwlCalendarNextView
         [view]="view"
         [(viewDate)]="viewDate"
+        (viewDateChange)="fetchEvents()"
+        (viewChange)="fetchEvents()"
         (viewDateChange)="viewDateChange.next(viewDate)">
         Next
       </button>

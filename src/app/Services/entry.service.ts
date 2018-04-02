@@ -8,7 +8,7 @@ import {UserService} from './user.service';
 @Injectable()
 export class EntryService {
 
-  private headers = new HttpHeaders({'Content-Type': 'application/json'});
+  private headers;
 
   constructor(private http: HttpClient,
               private apiSerive: ApiService,
@@ -16,11 +16,9 @@ export class EntryService {
 
   private AddTokenToHeaders()
   {
-    if(!this.headers.has("Authorization"))
-    {
-      let authToken = localStorage.getItem('auth_token');
-      this.headers.append('Authorization', `Bearer ${authToken}`);
-    }
+    let authToken = localStorage.getItem('auth_token');
+    this.headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${authToken}`);
+    console.log(this.headers);
   }
 
   public SaveEntry(startTime, endTime, date:Date, outsiteTime, type:string,allDay:boolean)
@@ -44,8 +42,7 @@ export class EntryService {
   public GetEntriesForDates(startDate: Date, endDate: Date)
   {
     this.AddTokenToHeaders();
-    return this.http.get(this.apiSerive.GetEntryURL() + "/" + startDate + "/" + endDate)
-      .toPromise();
+    return this.http.get(this.apiSerive.GetEntryURL() + "/" + this.userService.getUserId() + "/" + startDate.toDateString() + "/" + endDate.toDateString(), {headers:this.headers}).toPromise();
   }
 
   private SendEntryToAPI(entry:Entry)
@@ -63,29 +60,21 @@ export class EntryService {
 
     let body = JSON.stringify(entry);
     console.log(body);
-    return this.http.put(this.apiSerive.GetEntryURL() + "/" + entry.Id,body,{headers:this.headers,responseType: 'text' })
+    return this.http.put(this.apiSerive.GetEntryURL() + "/" + entry.id,body,{headers:this.headers,responseType: 'text' })
       .toPromise();
   }
 
   private CreateEntry(id: number, allDay: boolean, startTime, endTime, date: Date, outsiteTime, type: string) {
     let entry = new Entry();
-    entry.Id = id;
-    entry.AllDay = allDay;
-    entry.StartTime = this.GetTimeStringFromTime(startTime);
-    entry.EndTime = this.GetTimeStringFromTime(endTime);
-    entry.Date = this.GetDateWithOffset(date);
-    entry.OutsideTime = this.GetTimeStringFromTime(outsiteTime);
-    entry.Type = type;
-    entry.UserId = this.userService.getUserId();
+    entry.id = id;
+    entry.allDay = allDay;
+    entry.startTime = this.GetTimeStringFromTime(startTime);
+    entry.endTime = this.GetTimeStringFromTime(endTime);
+    entry.date = date.GetDateWithoutTime();
+    entry.outsideTime = this.GetTimeStringFromTime(outsiteTime);
+    entry.type = type;
+    entry.userId = this.userService.getUserId();
     return entry;
-  }
-
-  private GetDateWithOffset(date :Date)
-  {
-    let offset = date.getTimezoneOffset()*60000;
-    let newDate = new Date(date);
-    newDate.setTime(newDate.getTime()-offset);
-    return newDate;
   }
 
   private GetTimeStringFromTime(time) {
